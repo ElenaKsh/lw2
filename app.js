@@ -6,16 +6,16 @@ function register(email, password) {
     return "Данный email невалиден";
   }
   let digits = "0123456789";
-  let is_digit = false;
+  let isDigit = false;
   for (let i = 0; i < password.length; i++) {
     if (digits.indexOf(password[i]) != -1) {
-      is_digit = true;
+      isDigit = true;
     }
   }
 
   if (
     password.length >= 6 &&
-    is_digit &&
+    isDigit &&
     password.charAt(0).toUpperCase() === password.charAt(0)
   ) {
     userData = [email, password];
@@ -32,16 +32,16 @@ function signIn(email, password) {
     return "Данный email невалиден";
   }
   let digits = "0123456789";
-  let is_digit = false;
+  let isDigit = false;
   for (let i = 0; i < password.length; i++) {
     if (digits.indexOf(password[i]) != -1) {
-      is_digit = true;
+      isDigit = true;
     }
   }
 
   if (
     password.length >= 6 &&
-    is_digit &&
+    isDigit &&
     password.charAt(0).toUpperCase() === password.charAt(0)
   ) {
     for (let i = 0; i < userDatabase.length; i++) {
