@@ -1,8 +1,8 @@
 var authUserData = null;
 var userDatabase = [];
 function register(email, password) {
-  let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (re.test(email) === false) {
+  let regularExpressionForCheckingMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (regularExpressionForCheckingMail.test(email) === false) {
     return "Данный email невалиден";
   }
   let digits = "0123456789";
@@ -27,8 +27,8 @@ function register(email, password) {
 }
 
 function signIn(email, password) {
-  let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (re.test(email) === false) {
+  let regularExpressionForCheckingMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (regularExpressionForCheckingMail.test(email) === false) {
     return "Данный email невалиден";
   }
   let digits = "0123456789";
@@ -61,8 +61,8 @@ function signOut() {
 }
 
 function resetPassword(email, oldPassword, newPassword) {
-  let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (re.test(email) === false) {
+  let regularExpressionForCheckingMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (regularExpressionForCheckingMail.test(email) === false) {
     return "Данный email невалиден";
   }
   let digits = "0123456789";
@@ -110,10 +110,10 @@ function isAuth() {
 
 //console.log(validator("25"));
 
-console.log(register("smyshlyaev12@list.ru", "Password123"));
-console.log(signIn("smyshlyaev12@list.ru", "Password123"));
+console.log(register("olimpiada100@list.ru", "Password123"));
+console.log(signIn("olimpiada100@list.ru", "Password123"));
 console.log(
-  resetPassword("smyshlyaev12@list.ru", "Password123", "Password1478524758")
+  resetPassword("olimpiada100@list.ru", "Password123", "Password1478524758")
 );
 console.log(signOut());
 console.log(userDatabase);
