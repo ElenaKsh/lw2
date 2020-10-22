@@ -48,6 +48,8 @@ function signIn(email, password) {
       if (userDatabase[i][0] === email && userDatabase[i][1] === password) {
         authUserData = true;
         return "Вход выполнен";
+      } else {
+        return "Данного пользователя не существует";
       }
     }
   } else {
@@ -100,12 +102,14 @@ function resetPassword(email, oldPassword, newPassword) {
     if (userDatabase[i][0] === email && userDatabase[i][1] === oldPassword) {
       userDatabase[i][1] = newPassword;
       return "Парорль изменён";
+    } else {
+      return "Данного пользователя не существует";
     }
   }
 }
 
 function isAuth() {
-  return authUserData;
+  return authUserData ? "Вы авторизированы" : "Вы не авторизированы";
 }
 
 //console.log(validator("25"));
