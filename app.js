@@ -1,5 +1,6 @@
-var authUserData = null;
+var authUserData = false;
 var userDatabase = [];
+
 function register(email, password) {
   let regularExpressionForCheckingMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (regularExpressionForCheckingMail.test(email) === false) {
@@ -18,6 +19,11 @@ function register(email, password) {
     isDigit &&
     password.charAt(0).toUpperCase() === password.charAt(0)
   ) {
+    for (let i = 0; i < userDatabase.length; i++) {
+      if (userDatabase[i][0] === email) {
+        return "Пользователь уже существует";
+      }
+    }
     userData = [email, password];
     userDatabase.push(userData);
     return "Пользователь успешно добавлен";
@@ -58,7 +64,7 @@ function signIn(email, password) {
 }
 
 function signOut() {
-  authUserData = null;
+  authUserData = false;
   return "Выход выполнен";
 }
 
@@ -109,7 +115,7 @@ function resetPassword(email, oldPassword, newPassword) {
 }
 
 function isAuth() {
-  return authUserData ? "Вы авторизированы" : "Вы не авторизированы";
+  return authUserData;
 }
 
 //console.log(validator("25"));
