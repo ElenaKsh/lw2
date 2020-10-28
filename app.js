@@ -1,31 +1,31 @@
 var authUserData = false;
 var userDatabase = [];
 
+function checkValidEmail(email) {
+  let regularExpressionForCheckingMail = /^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regularExpressionForCheckingMail.test(email);
+}
+
+function checkValidPassword(password) {
+  return (
+    password.length >= 6 &&
+    password.search(/\d/) !== -1 &&
+    password.charAt(0).toUpperCase() === password.charAt(0)
+  );
+}
+
 function register(email, password) {
-  let regularExpressionForCheckingMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (regularExpressionForCheckingMail.test(email) === false) {
+  if (!checkValidEmail(email)) {
     return "Данный email невалиден";
   }
-  let digits = "0123456789";
-  let isDigit = false;
-  for (let i = 0; i < password.length; i++) {
-    if (digits.indexOf(password[i]) != -1) {
-      isDigit = true;
-    }
-  }
 
-  if (
-    password.length >= 6 &&
-    isDigit &&
-    password.charAt(0).toUpperCase() === password.charAt(0)
-  ) {
+  if (checkValidPassword(password)) {
     for (let i = 0; i < userDatabase.length; i++) {
-      if (userDatabase[i][0] === email) {
+      if (userDatabase[i].email === email) {
         return "Пользователь уже существует";
       }
     }
-    userData = [email, password];
-    userDatabase.push(userData);
+    userDatabase.push({ email: email, password: password });
     return "Пользователь успешно добавлен";
   } else {
     return "Данный пароль не валиден";
@@ -33,25 +33,16 @@ function register(email, password) {
 }
 
 function signIn(email, password) {
-  let regularExpressionForCheckingMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (regularExpressionForCheckingMail.test(email) === false) {
+  if (!checkValidEmail(email)) {
     return "Данный email невалиден";
   }
-  let digits = "0123456789";
-  let isDigit = false;
-  for (let i = 0; i < password.length; i++) {
-    if (digits.indexOf(password[i]) != -1) {
-      isDigit = true;
-    }
-  }
 
-  if (
-    password.length >= 6 &&
-    isDigit &&
-    password.charAt(0).toUpperCase() === password.charAt(0)
-  ) {
+  if (checkValidPassword(password)) {
     for (let i = 0; i < userDatabase.length; i++) {
-      if (userDatabase[i][0] === email && userDatabase[i][1] === password) {
+      if (
+        userDatabase[i].email === email &&
+        userDatabase[i].password === password
+      ) {
         authUserData = true;
         return "Вход выполнен";
       } else {
@@ -69,45 +60,25 @@ function signOut() {
 }
 
 function resetPassword(email, oldPassword, newPassword) {
-  let regularExpressionForCheckingMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (regularExpressionForCheckingMail.test(email) === false) {
+  if (!checkValidEmail(email)) {
     return "Данный email невалиден";
   }
-  let digits = "0123456789";
-  let isDigitForOldPassword = false;
-  for (let i = 0; i < oldPassword.length; i++) {
-    if (digits.indexOf(oldPassword[i]) != -1) {
-      isDigitForOldPassword = true;
-    }
-  }
 
-  if (
-    oldPassword.length < 6 ||
-    !isDigitForOldPassword ||
-    oldPassword.charAt(0).toUpperCase() !== oldPassword.charAt(0)
-  ) {
+  if (!checkValidPassword(oldPassword)) {
     return "Данный пароль не валиден";
   }
 
-  let isDigitForNewPassword = false;
-  for (let i = 0; i < newPassword.length; i++) {
-    if (digits.indexOf(newPassword[i]) != -1) {
-      isDigitForNewPassword = true;
-    }
-  }
-
-  if (
-    newPassword.length < 6 ||
-    !isDigitForNewPassword ||
-    newPassword.charAt(0).toUpperCase() !== newPassword.charAt(0)
-  ) {
+  if (!checkValidPassword(newPassword)) {
     return "Данный пароль не валиден";
   }
 
   for (let i = 0; i < userDatabase.length; i++) {
-    if (userDatabase[i][0] === email && userDatabase[i][1] === oldPassword) {
+    if (
+      userDatabase[i].email === email &&
+      userDatabase[i].password === oldPassword
+    ) {
       userDatabase[i][1] = newPassword;
-      return "Парорль изменён";
+      return "Пароль изменён";
     } else {
       return "Данного пользователя не существует";
     }
@@ -118,9 +89,8 @@ function isAuth() {
   return authUserData;
 }
 
-//console.log(validator("25"));
-
 console.log(register("olimpiada100@list.ru", "Password123"));
+console.log(register("olimpiada100@list.ru", "Password125153"));
 console.log(signIn("olimpiada100@list.ru", "Password123"));
 console.log(
   resetPassword("olimpiada100@list.ru", "Password123", "Password1478524758")
